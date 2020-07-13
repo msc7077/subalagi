@@ -1,22 +1,24 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <memo-app/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MemoApp from './components/MemoApp.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MemoApp,
   }
 }
 </script>
 
 <style>
+
+@import "./styles/reset.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
