@@ -97,11 +97,22 @@ export default {
             const { id, content } = payload;
             const targetIndex = this.memos.findIndex(v => v.id === id);
             const targetMemo = this.memos[targetIndex];
-            console.log("===============");
-            console.log("targetMemo1", {...targetMemo});
-            console.log("===============");
-            console.log("targetMemo2", {...targetMemo, content});
-            console.log("===============");
+            // ...변수 : javacript 문법으로써 ES6에 추가된 spread 연산자라고 한다. ES6을 넘어 ES9에는 객체 또한 spread 연산자 사용이 가능합니다.
+            /*
+            const obj1 = {a: 1, b: 2}
+            const obj2 = {c: 3}
+            console.log({...obj1, ...obj2}) // {a: 1, b: 2, c: 3}
+            // 객체 합치기에 사용할 수 있습니다.
+
+            const copiedObj = {...obj1}
+            console.log(copiedObj) // {a: 1, b: 2}
+            // 객체 복사에 사용할 수 있습니다.
+
+            const obj3 = {...obj1, b: 'b'}
+            console.log(obj3) // {a: 1, b: 'b'}
+            // 기존 객체의 값을 수정해서 새로운 객체 만들기에 사용할 수 있습니다.
+            */
+            // 수정 - splice 함수를 사용 : this.memos 배열에 있는 값들 중에 targetIndex를 포함한 한개 요소 제거하고 그 자리에 세번쨰 인자의 값 또는 객체를 넣어준다. = 즉, targetIndex가 3이라면 3에 해당하는 값만 배열에서 제거하고, 3에 세번째 인자 값을 넣어준다.
             this.memos.splice(targetIndex, 1, { ...targetMemo, content });
             this.storeMemo();
         }
