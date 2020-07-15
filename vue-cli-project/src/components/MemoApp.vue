@@ -9,10 +9,12 @@
             <!-- 사용자 지정 태그를 작성할떄 컴포넌트 명이 Test 라면 <test /> 가 되고, TestCompo 라면 <test-compo /> 가 된다!! 책 대충 읽었다가 혼자 의문에 빠져서 뻘짓함 ㅡㅡㅋ  -->
             <!-- v-for 사용시 2.2.0 이상에서는 key 값을 필수로 등록을 해줘야한다. -->
             <!-- 삭제 기능을 구현하기 위해 자식 컴포넌트에서 정한 deleteMemo 함수명을 리스너로 등록해준다. -->
+            <!-- 수정 기능을 구현하기 위해 자식 컴포넌트에서 정한 updateMemo 함수명을 리스너로 등록해준다. -->
             <memo v-for="memo in memos"
                     :key="memo.id"
                     :memoPropsFromMemoApp="memo" 
                     @deleteMemo="deleteMemo"
+                    @updateMemo="updateMemo"
                     />
         </ul>
     </div>
@@ -89,6 +91,18 @@ export default {
             // 삭제 - splice 함수를 사용 : this.memos 배열에 있는 값들 중에 targetIndex를 포함한 한개 요소 제거 = 즉, targetIndex가 3이라면 3에 해당하는 값만 배열에서 제거한다.
             this.memos.splice(targetIndex, 1);
             // 삭제한 후 데이터를 로컬 스토리지에 다시 저장한다.
+            this.storeMemo();
+        },
+        updateMemo (payload) {
+            const { id, content } = payload;
+            const targetIndex = this.memos.findIndex(v => v.id === id);
+            const targetMemo = this.memos[targetIndex];
+            console.log("===============");
+            console.log("targetMemo1", {...targetMemo});
+            console.log("===============");
+            console.log("targetMemo2", {...targetMemo, content});
+            console.log("===============");
+            this.memos.splice(targetIndex, 1, { ...targetMemo, content });
             this.storeMemo();
         }
 
