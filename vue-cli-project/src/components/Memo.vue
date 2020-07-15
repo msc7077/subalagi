@@ -6,9 +6,11 @@
         <p @dblclick="handleDdlClick">
             <template v-if="!isEditing">{{ memoPropsFromMemoApp.content }}</template>
             <!-- keydown.enter : 입력 후 엔터를 쳤을떄의 이벤트 -->
+            <!-- blur : 해당 input 영역에서 커서가 있는 상태에서 다른 곳을 클릭하여 input창에 커서가 사라졌을 떄의 이벤트 -->
             <input v-else type="text" 
                             ref="content"
                             :value="memoPropsFromMemoApp.content" 
+                            @blur="handleBlur"
                             @keydown.enter="updateMemo"
                             />
         </p>
@@ -65,6 +67,10 @@ export default {
             }
             this.$emit('updateMemo', { id, content });
             this.isEditing = false;
+        },
+        handleBlur () {
+            // 수정 중인 상태를 종료시켜준다.
+            this.isEditing = false;
         }
     },  
     beforeUpdate() {
@@ -72,7 +78,7 @@ export default {
     },
     updated() {
         console.log("updated => ", this.$refs.content);
-    },
+    }
 }
 </script>
 <style scoped>
