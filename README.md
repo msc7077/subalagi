@@ -26,9 +26,8 @@ vue cli 설치
  ㄴ 그냥 최신버전을 설치하고 싶을때는 npm install @vue/cli 로 설치하면 된다.
  ㄴ 삭제하고 싶어서 해당 버전을 삭제했는데 삭제가 안되서 알아봤더니 nvm 설치 여부에 따라 -g의 경로가 달라진다!!!
 
-프로젝트 생성
- ㄴ 작업할 폴더 생성(예 : vuejsProject)
- ㄴ git으로 clone 했을경우 필요없음!!!!!!!!!!
+프로젝트 생성 (*필독 !!!! git으로 clone 했을경우 필요없음!!!!!!!!!! )
+ ㄴ 작업할 폴더 생성(예 : vuejsProject) 
  ㄴ vuejsProject 안에서 vue init webpack hello-world 
  ㄴ 그냥 다 yes 로 하자. 계속 엔터~!
  ㄴ 로 프로젝트 생성
