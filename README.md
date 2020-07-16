@@ -38,4 +38,21 @@ vue cli 설치
  ㄴ hello-world 폴더에서 npm run dev( 3,4버전에서는 npm run serve) 실행
  ㄴ localhost:8080 으로 실행할 수 있다. 
  ㄴ 포트 수정 시 1,2버전에서는 /config/index.js 에서 3,4버전에서는 npm run serve -- --port 3000 이렇게 변경 가능하다.
- ㄴ 
+ 
+Axios 설치 : HTTP 통신 라이브러리인 
+ ㄴ hello-world 폴더에서 npm install axios --save
+ ㄴ 설치시 nodo_modules 폴더를 보면 axios 폴더가 생성됐음을 확인할 수 있다. 만약 없다면 새로고침하면 됨
+
+Vuex 설치 : 애플리케이션의 상태관리를 통합적으로 구성할 수 있게 해주는 라이브러리이다.
+ ㄴ hello-world 폴더에서 npm install vuex --save
+ ㄴ 설치시 nodo_modules 폴더를 보면 vuex 폴더가 생성됐음을 확인할 수 있다. 만약 없다면 새로고침하면 됨
+
+RESTful API : 예제를 위한 소스
+ ㄴ 원하는 경로 아무데에나 clone 한다. 
+ ㄴ https://github.com/CanDoVueJS/RESTful-api-server.git 
+ ㄴ RESTful-api-server 폴더로 이동한다.
+ ㄴ package-lockj.json 파일을 삭제
+ ㄴ npm install 을 실행하여 API 서버가 동작하기 위해 필요한 패키지들을 설치하도록 한다. -> node_modules 폴더가 생성된다.
+ ㄴ npm run dev 실행 
+ ㄴ 웹브라우저에 localhost:8000 을 요청하면 API 서버가 정상적으로 실행되고 있다는 성공메시지를 확인할 수 있다.
+ 
