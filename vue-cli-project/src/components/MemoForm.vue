@@ -38,6 +38,9 @@ export default {
     },
     methods: {
         addMemo () {
+            /*
+            * 기존 메모의 ID 를 임의로 생성하여 메모 데이터를 만든 과정
+            *
             // 비구조화 할당??? 구문을 이용하여 변수를 선언한다.????
             // 비구조화 할당 구문 : 객체의 속성을 해제하여 그 값을 각각의 변수에 담을 수 있도록하는 자바스크립트의 표현식 문법이다.
             const { title, content } = this;
@@ -55,6 +58,21 @@ export default {
             this.$emit('addMemo', { id, title, content });
 
             // 부모 컴포넌트에 데이터를 전파한 후 입력창의 데이터를 다시 초기화한다
+            this.resetField();
+            */
+
+            /*
+            * RESTful API 를 통해 생성된 메모 ID 를 사용하여 메모 데이터를 만드는 과정
+            *
+           */
+            console.log("MemoForm >> this :: ", this);
+            const { title, content } = this;
+            const isEmpty = title.length <= 0 || content.length <= 0;
+            if (isEmpty) {
+                alert("값을 입력해주세요.");
+                return false;
+            }
+            this.$emit('addMemo', { title, content });
             this.resetField();
         },
         resetField () {

@@ -23,6 +23,11 @@
 <script>
 import MemoForm from './MemoForm';
 import Memo from './Memo';
+import axios from 'axios';
+
+const memoAPICore = axios.create({
+    baseURL: 'http://localhost:8000/api/memos'
+})
 
 export default {
     name: 'MemoApp',
@@ -38,15 +43,34 @@ export default {
     // created훅
     created() {
         // 만약 기존에 추가된 loaclstorage 에 데이터가 있다면 created 훅에서 localstorage의 데이터를 컴포넌트 내의 memos 데이터에 넣어주고 , 그렇지 않다면 그대로 빈 배열로 초기화한다.
-        this.memos = localStorage.memos ? JSON.parse(localStorage.memos) : [];
+        // this.memos = localStorage.memos ? JSON.parse(localStorage.memos) : [];
+        // 기존에는 위와같이 로컬스토리지에 저장을 했지만 이제 Axios 객체를 이용하여 서버에 있는 초기 데이터를 받아와 data 에 저장하도록 변경한다.
+        memoAPICore.get('/')
+            .then(res => {
+                this.memos = res.data;
+            })
     }, 
     methods: {
         addMemo (payload) {
+            /*
+            * 기존
+            *
             // MemoForm 에서 올려 받은 데이터를 먼저 컴포넌트 내부 데이터에 추가한다
             this.memos.push(payload);
             // 내부 데이터를 문자열로 변환 후 로컬 스토리지에 저장한다
             this.storeMemo();
             // 로컬스토리지에 저상됨을 확인하려면 개발자 도구의 Application 탭에서 Storage->LocalStorage에서 현재 ip와 port가 적힌 곳에서 확인이 가능하다
+            */
+
+            /*
+            * RESTful API 사용
+            *
+           */
+            memoAPICore.post('/', payload)
+                .then(res => {
+                    this.memos.push(res.data);
+                })
+
         },
         storeMemo () {
             const memosToString = JSON.stringify(this.memos);
@@ -86,12 +110,24 @@ export default {
             }
             const targetIndex = this.memos.findIndex(testFunc);
             */
+            /**
+            * 기존
+            *
             const targetIndex = this.memos.findIndex(data => data.id === id);
             //console.log("targetIndex >>> "+targetIndex);
             // 삭제 - splice 함수를 사용 : this.memos 배열에 있는 값들 중에 targetIndex를 포함한 한개 요소 제거 = 즉, targetIndex가 3이라면 3에 해당하는 값만 배열에서 제거한다.
             this.memos.splice(targetIndex, 1);
             // 삭제한 후 데이터를 로컬 스토리지에 다시 저장한다.
             this.storeMemo();
+            */
+            /**
+             *  RESTful API 사용
+             */
+            const targetIndex = this.memos.findIndex(data => data.id === id);
+            memoAPICore.delete(`/${id}`)
+                .then(() => {
+                    this.memos.splice(targetIndex, 1);
+                })
         },
         updateMemo (payload) {
             const { id, content } = payload;
@@ -112,9 +148,21 @@ export default {
             console.log(obj3) // {a: 1, b: 'b'}
             // 기존 객체의 값을 수정해서 새로운 객체 만들기에 사용할 수 있습니다.
             */
+            /**
+             *  기존
+             * 
             // 수정 - splice 함수를 사용 : this.memos 배열에 있는 값들 중에 targetIndex를 포함한 한개 요소 제거하고 그 자리에 세번쨰 인자의 값 또는 객체를 넣어준다. = 즉, targetIndex가 3이라면 3에 해당하는 값만 배열에서 제거하고, 3에 세번째 인자 값을 넣어준다.
             this.memos.splice(targetIndex, 1, { ...targetMemo, content });
             this.storeMemo();
+             */
+
+            /**
+             *  RESTful API 사용
+             */
+            memoAPICore.put(`/${id}`, { content })
+                .then(() => {
+                    this.memos.splice(targetIndex, 1, { ...targetMemo, content });
+                })
         }
 
     },
